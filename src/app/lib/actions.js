@@ -12,8 +12,19 @@ export async function deleteUser(userId) {
     revalidatePath("/users");
   }
   return data;
-
-  // Verify the user owns this resource before deleting
-  // Mutate data
-  // Revalidate cache
 }
+
+export const createUser = async (formData) => {
+  "use server";
+  const newUser = Object.fromEntries(formData.entries());
+  const res = await fetch("http://localhost:5000/users", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newUser),
+  });
+  const data = await res.json();
+  console.log("data after post", data);
+  return data;
+};
