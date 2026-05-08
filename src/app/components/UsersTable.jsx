@@ -2,11 +2,10 @@
 import React from "react";
 import { AlertDialog, Button, Table } from "@heroui/react";
 import Link from "next/link";
-import { deleteUser } from "../lib/actions";
 
-const UsersTable = ({ users }) => {
+const UsersTable = ({ users, deleteUserAction }) => {
   const handleDelete = async (userId) => {
-    await deleteUser(userId);
+    await deleteUserAction(userId);
   };
   return (
     <Table>
@@ -31,45 +30,43 @@ const UsersTable = ({ users }) => {
                   <Link href={`/users/${user._id}`}>
                     <Button variant="outline">Edit</Button>
                   </Link>
-                  <Link href={``}>
-                    <AlertDialog>
-                      <Button
-                        variant="danger"
-                        onClick={() => {
-                          handleDelete(`${user._id}`);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                      <AlertDialog.Backdrop>
-                        <AlertDialog.Container>
-                          <AlertDialog.Dialog className="sm:max-w-[400px]">
-                            <AlertDialog.CloseTrigger />
-                            <AlertDialog.Header>
-                              <AlertDialog.Icon status="danger" />
-                              <AlertDialog.Heading>
-                                Delete user permanently?
-                              </AlertDialog.Heading>
-                            </AlertDialog.Header>
-                            <AlertDialog.Body>
-                              <p>
-                                This will permanently delete{" "}
-                                <strong>{user.name}</strong>
-                              </p>
-                            </AlertDialog.Body>
-                            <AlertDialog.Footer>
-                              <Button slot="close" variant="tertiary">
-                                Cancel
-                              </Button>
-                              <Button slot="close" variant="danger">
-                                Delete Project
-                              </Button>
-                            </AlertDialog.Footer>
-                          </AlertDialog.Dialog>
-                        </AlertDialog.Container>
-                      </AlertDialog.Backdrop>
-                    </AlertDialog>
-                  </Link>
+
+                  <AlertDialog>
+                    <Button variant="danger">Delete</Button>
+                    <AlertDialog.Backdrop>
+                      <AlertDialog.Container>
+                        <AlertDialog.Dialog className="sm:max-w-[400px]">
+                          <AlertDialog.CloseTrigger />
+                          <AlertDialog.Header>
+                            <AlertDialog.Icon status="danger" />
+                            <AlertDialog.Heading>
+                              Delete user permanently?
+                            </AlertDialog.Heading>
+                          </AlertDialog.Header>
+                          <AlertDialog.Body>
+                            <p>
+                              This will permanently delete{" "}
+                              <strong>{user.name}</strong>
+                            </p>
+                          </AlertDialog.Body>
+                          <AlertDialog.Footer>
+                            <Button slot="close" variant="tertiary">
+                              Cancel
+                            </Button>
+                            <Button
+                              onClick={() => {
+                                handleDelete(`${user._id}`);
+                              }}
+                              slot="close"
+                              variant="danger"
+                            >
+                              Delete
+                            </Button>
+                          </AlertDialog.Footer>
+                        </AlertDialog.Dialog>
+                      </AlertDialog.Container>
+                    </AlertDialog.Backdrop>
+                  </AlertDialog>
                 </Table.Cell>
               </Table.Row>
             ))}

@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 export async function deleteUser(userId) {
   "use server";
 
@@ -6,6 +8,9 @@ export async function deleteUser(userId) {
   });
 
   const data = await res.json();
+  if (data.deletedCount > 0) {
+    revalidatePath("/users");
+  }
   return data;
 
   // Verify the user owns this resource before deleting
