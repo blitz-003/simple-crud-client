@@ -26,5 +26,8 @@ export const createUser = async (formData) => {
   });
   const data = await res.json();
   console.log("data after post", data);
+  if (data.insertedId) {
+    revalidatePath("/users");
+  }
   return data;
 };

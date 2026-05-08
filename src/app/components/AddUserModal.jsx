@@ -38,7 +38,7 @@ export function AddUserModal({ createUserAction }) {
                       Cancel
                     </Button>
                     <Button type="submit" slot="close">
-                      Send Message
+                      Submit
                     </Button>
                   </Modal.Footer>
                 </form>
